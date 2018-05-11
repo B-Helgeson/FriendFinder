@@ -2,8 +2,8 @@ const path = require("path");
 
 module.exports = function(app) {
 
-  app.get("/reserve", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/reserve.html"));
+  app.get("/survey", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/survey.html"));
   });
 
   // default to home if "/home" or any other value is entered
