@@ -19,13 +19,12 @@ module.exports = function(app) {
         totalDifference += Math.abs(friendsData[i].friendscores[q] - userInput[q]);
       }
     
-
       allDifferences.push(totalDifference);
-
       totalDifference = 0;
 
     }
 
+    
     let match = friendsData[allDifferences.indexOf(Math.min.apply(null, allDifferences))];
 
     res.send(match);
