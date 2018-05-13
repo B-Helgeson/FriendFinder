@@ -24,14 +24,14 @@ module.exports = function(app) {
 
 function getMatch (newUser) {
   let userScores = newUser.friendScores,
-      minDiff = 41, // Start at the maximum possible difference
+      minimumDifference = 41, // Start at the maximum possible difference
       match; // closest match
 
   friendsList.forEach(friend => {
-    let diff = userScores.map((val, index) => Math.abs(friend.friendScores[index] - val)).reduce((acc, val) => acc + val)
-    if (diff < minDiff) {
+    let difference = userScores.map((val, index) => Math.abs(friend.friendScores[index] - val)).reduce((acc, val) => acc + val)
+    if (difference < minimumDifference) {
         match = friend
-        minDiff = diff
+        minimumDifference = difference 
     }
   });
   return match;
