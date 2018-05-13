@@ -1,40 +1,53 @@
-const   friendsData = require("../data/friends");
+const   friendsData = require("../data/friends"),
+        friendsList = friendsData //friendsData.slice();
 
 module.exports = function(app) {
 
-  // API GET to return all friends data
-  app.get("/api/friends", function(req, res) {
-    res.json(friendsData);
+  // functionality to return all friends
+  app.get('/api/friends', function(req, res) {
+    res.json(friendsList);
   });
 
-  // Accepts API POST requests with new user data
-  app.post("/api/friends", function(req, res) {
+  // functionality to delete the friends list (if needed)
+  app.get('/api/clear', function(req, res) {
+    res.json(friendsList);
+  });
 
-    let userInput = req.body,
-        totalDifference = 0,
-        allDifferences = 0;
+  // functionality to send a new friend to the application
+  app.post('/api/friends', function(req, res) {
+    let newUser = req.body;
+    //console.log(newUser);
+    res.json(getMatch(newUser));
+    friends.push(newUser);
+  });
+}
 
-    for (var i = 0; i<(friendsData.length-1); i++){
-      for (var q = 0; q<10; q++){
-        totalDifference += Math.abs(friendsData[i].friendscores[q] - userInput[q]);
+function getMatch (userData) {
+  let scores = userData.friendScores;
+  let match;
+  let oldDif;
+
+  // leep through each friend in the friendsList array
+  for (let i = 0; i < friendsList.length; i++) {
+      let newDif = 0;
+
+      // loop through each answer for each friend in the friends list array
+      for (let j = 0; j < friendsList[i].friendScores.length; j++) {
+          // compare user input answers vs friend answer for each friend and each question
+          let answer1 = parseInt(friendScores[j]);
+          let answer2 = parseInt(friendsList[i].friendScores[j]);
+          let difference = Math.abs(answer1 - answer2);
+          newDif += difference;
       }
-    
-      allDifferences.push(totalDifference);
-      totalDifference = 0;
 
-    }
+      if(oldDif == undefined) {
+          oldDif = newDif;
+      }
 
-    
-    let match = friendsData[allDifferences.indexOf(Math.min.apply(null, allDifferences))];
-
-    res.send(match);
-    console.log(match);
-
-  });
-
-
-  app.post("/api/clear", function() {
-    friendsData = []
-    console.log(friendsData);
-  });
-};
+      if(oldDif >= newDif) {
+          oldDif = newDif;
+          match = friendsList[i];            
+      }
+  }
+  return match;
+} 
