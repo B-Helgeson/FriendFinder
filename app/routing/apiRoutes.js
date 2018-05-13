@@ -1,5 +1,5 @@
 const   friendsData = require("../data/friends"),
-        friendsList = friendsData //friendsData.slice();
+        friendsList = friendsData.slice();
 
 module.exports = function(app) {
 
@@ -16,14 +16,14 @@ module.exports = function(app) {
   // functionality to send a new friend to the application
   app.post('/api/friends', function(req, res) {
     let newUser = req.body;
-    //console.log(newUser);
+    console.log(newUser.friendName + "Has been added");
     res.json(getMatch(newUser));
-    friends.push(newUser);
+    friendsList.push(newUser);
   });
 }
 
-function getMatch (userData) {
-  let scores = userData.friendScores;
+function getMatch (newUser) {
+  let userScores = newUser.friendScores;
   let match;
   let oldDif;
 
@@ -32,9 +32,9 @@ function getMatch (userData) {
       let newDif = 0;
 
       // loop through each answer for each friend in the friends list array
-      for (let j = 0; j < friendsList[i].friendScores.length; j++) {
+      for (let j = 0; j < 10; j++) {
           // compare user input answers vs friend answer for each friend and each question
-          let answer1 = parseInt(friendScores[j]);
+          let answer1 = parseInt(userScores[j]);
           let answer2 = parseInt(friendsList[i].friendScores[j]);
           let difference = Math.abs(answer1 - answer2);
           newDif += difference;
