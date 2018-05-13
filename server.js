@@ -2,7 +2,7 @@
 const   express = require("express"),
         bodyParser = require("body-parser"),
         path = require("path"),
-        PORT = process.env.PORT || 8080;
+        PORT = process.env.PORT || 3006;
         app = express();
 
 // Sets up the Express app to handle data parsing

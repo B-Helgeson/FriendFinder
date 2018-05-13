@@ -1,5 +1,5 @@
 const   friendsData = require("../data/friends"),
-        friendsList = friendsData.slice();
+        friendsList = friendsData.slice(); //slice method ensures user not a match to themselves
 
 module.exports = function(app) {
 
@@ -23,31 +23,17 @@ module.exports = function(app) {
 }
 
 function getMatch (newUser) {
-  let userScores = newUser.friendScores;
-  let match;
-  let oldDif;
+  let userScores = newUser.friendScores,
+      minDiff = 41, // Start at the maximum possible difference
+      match; // closest match
 
-  // leep through each friend in the friendsList array
-  for (let i = 0; i < friendsList.length; i++) {
-      let newDif = 0;
-
-      // loop through each answer for each friend in the friends list array
-      for (let j = 0; j < 10; j++) {
-          // compare user input answers vs friend answer for each friend and each question
-          let answer1 = parseInt(userScores[j]);
-          let answer2 = parseInt(friendsList[i].friendScores[j]);
-          let difference = Math.abs(answer1 - answer2);
-          newDif += difference;
-      }
-
-      if(oldDif == undefined) {
-          oldDif = newDif;
-      }
-
-      if(oldDif >= newDif) {
-          oldDif = newDif;
-          match = friendsList[i];            
-      }
-  }
+  friendsList.forEach(friend => {
+    let diff = userScores.map((val, index) => Math.abs(friend.friendScores[index] - val)).reduce((acc, val) => acc + val)
+    if (diff < minDiff) {
+        match = friend
+        minDiff = diff
+    }
+  });
   return match;
-} 
+  console.log(match);
+}

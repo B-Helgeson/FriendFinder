@@ -13,9 +13,13 @@
       friendName: 'Jake Peralta',
       friendPhoto: 'https://pbs.twimg.com/profile_images/928266336073117696/W2gCidjA_400x400.jpg',
       friendScores: ['5','5','1','3','4','5','3','4','2','5']
+    },
+    {
+      friendName: 'Charles',
+      friendPhoto: 'https://vignette.wikia.nocookie.net/brooklynnine-nine/images/2/28/Joe-509.jpg/revision/latest?cb=20130517205159',
+      friendScores: ['2','1','5','2','3','1','2','3','1','4']
     }
   ];
-  
 
   module.exports = friendsData;
   
